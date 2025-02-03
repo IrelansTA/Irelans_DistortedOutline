@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   k_AssetVersion: 3
   m_RenderingLayerNames:
-  - Light Layer default
+  - Default
   - Light Layer 1
-  - Light Layer 2
+  - Outline
   - Light Layer 3
   - Light Layer 4
   - Light Layer 5

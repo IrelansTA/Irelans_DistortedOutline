@@ -9,7 +9,8 @@ Shader "Irelans/SS_Outline_Distort"
     }
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
+        Tags { "RenderType" = "Opaque"
+         "RenderPipeline" = "UniversalPipeline" }
         ZWrite Off
          Cull Off
         // ZTest On
@@ -76,7 +77,7 @@ Shader "Irelans/SS_Outline_Distort"
                 
              
 
-                if (color.x > 0.1f)
+                if (color.x > 0.001f)
                 {
                     // 预乘 Alpha
                     clip(-1);
@@ -95,7 +96,7 @@ Shader "Irelans/SS_Outline_Distort"
                     // 这里采用的是采样一圈 16 个像素的方式
                     float2 uv = distorted_UV + float2(s, c) * texelSize * _OutlineWidth;
                     float4 sampleColor = tex2D(_MainTex, uv);
-                    if (sampleColor.x > 0.1f)
+                    if (sampleColor.x > 0.001f)
                     {
                         // 统计在 Mask 中的像素的数量
                         insideCount += 1;

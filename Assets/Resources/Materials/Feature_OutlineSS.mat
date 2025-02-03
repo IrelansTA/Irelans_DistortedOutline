@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Feature_OutlineSS
-  m_Shader: {fileID: 4800000, guid: a59d00e0a46f0184fa3b425ed1c403e7, type: 3}
+  m_Shader: {fileID: 4800000, guid: 82d771f1db2d1c441ae2a114452591c7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -61,8 +61,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DistortTex:
-        m_Texture: {fileID: 2800000, guid: 1ecdd33e2ac35da49973d44ce32587d4, type: 3}
-        m_Scale: {x: 4, y: 1}
+        m_Texture: {fileID: 2800000, guid: 772cca944490fb140bbf8a6d5d7e796e, type: 3}
+        m_Scale: {x: 3.03, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
@@ -114,8 +114,8 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _Dissovle: 0.012
-    - _Distort: -1.81
-    - _DistortSpeed: -0.3
+    - _Distort: -1.85
+    - _DistortSpeed: -0.2
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1

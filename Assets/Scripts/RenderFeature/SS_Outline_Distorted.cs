@@ -11,11 +11,10 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
 {
     OutlineDistortPass outlineDistortPass;
     public Material OutlineDistortMat;
-   
+
     public GraphicsFormat gfxFormat;
 
-    public Color OutlineColor;
-    public float OutlineWidth;
+
     public RenderPassEvent Event = RenderPassEvent.BeforeRenderingPostProcessing;
 
 
@@ -29,9 +28,9 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
         private readonly RenderTargetHandle OutlineSourceRT = RenderTargetHandle.CameraTarget;
 
         private List<ShaderTagId> shaderTagIdList = new List<ShaderTagId> {
-        new ShaderTagId("ScreenOutline"),
+        new ShaderTagId("UniversalForward"),
     };
-
+ 
         public Material OutlineDistortMat;
 
 
@@ -84,7 +83,7 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-          
+
 
             var stac = VolumeManager.instance.stack;
             if (stac.GetComponent<SS_OutlineVolume>() != null)
@@ -93,20 +92,21 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
             }
 
 
-            float Outlinewidth = feature.OutlineWidth;
-            Color Outlinecolor = feature.OutlineColor;
+            float Outlinewidth ;
+            Color Outlinecolor ;
 
 
             if (outline_volume != null && outline_volume.IsActive())
             {
                 Outlinewidth = outline_volume.OutlineWidth.value;
                 Outlinecolor = outline_volume.OutlineColor.value;
-             
+
             }
             else
             {
-                return;
                 Debug.LogWarning("outline_volume is null");
+
+                return;
             }
 
             Shader.SetGlobalFloat("_OutlineWidth", Outlinewidth);
@@ -115,7 +115,7 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
 
 
 
-            CommandBuffer cmd = CommandBufferPool.Get("SourceRT");
+            CommandBuffer cmd = CommandBufferPool.Get("DistortOutline");
             cmd.ClearRenderTarget(true, true, Color.clear, 0);
 
             {
@@ -125,10 +125,15 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
                 uint OutlineLayer = (uint)1 << 2;
                 FilteringSettings filteringSettings = new FilteringSettings(RenderQueueRange.all, -1, OutlineLayer);
                 DrawingSettings drawingSettings = CreateDrawingSettings(shaderTagIdList, ref renderingData, renderingData.cameraData.defaultOpaqueSortFlags);
+                //覆盖layer里所有物体的材质
+                drawingSettings.overrideShader = Shader.Find("Irelans/SS_Outline_Source");
+
                 RendererListParams rendererListParams = new RendererListParams(renderingData.cullResults, drawingSettings, filteringSettings);
 
                 // // 构建 RendererList
                 RendererList rendererList = context.CreateRendererList(ref rendererListParams);
+
+
                 // // 绘制需要描边的物体
                 cmd.DrawRendererList(rendererList);
 
@@ -150,7 +155,7 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
 
         public override void OnCameraCleanup(CommandBuffer cmd)
         {
-          
+
             cmd.ReleaseTemporaryRT(OutlineSourceRT.id);
 
 
@@ -160,7 +165,7 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
 
     public override void Create()
     {
-  
+
         // 建立对应的 ScriptableRenderPass
         outlineDistortPass = new OutlineDistortPass(this);
         // 将 ScriptableRenderPass 的渲染时机指定为所有其他渲染操作完成之后
@@ -172,12 +177,12 @@ public class SS_Outline_Distorted : ScriptableRendererFeature
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
-       
+
         renderer.EnqueuePass(outlineDistortPass);
     }
     public override void SetupRenderPasses(ScriptableRenderer renderer, in RenderingData renderingData)
     {
-        
+
         outlineDistortPass.SetTarget(renderer.cameraColorTargetHandle);
     }
 }
