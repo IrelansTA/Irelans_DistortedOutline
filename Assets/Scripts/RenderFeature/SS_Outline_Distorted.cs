@@ -1,11 +1,8 @@
 using UnityEngine;
-using System.Linq;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine.Experimental.Rendering;
-using Unity.Collections;
 
 public class SS_Outline_Distorted : ScriptableRendererFeature
 {

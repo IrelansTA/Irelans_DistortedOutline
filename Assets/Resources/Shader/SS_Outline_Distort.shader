@@ -93,7 +93,7 @@ Shader "Irelans/SS_Outline_Distort"
                     float s;
                     float c;
                     sincos(radians(360.0f / ((float)SAMPLE_COUNT) * ((float)i)), s, c);
-                    // 这里采用的是采样一圈 16 个像素的方式
+                    // 这里采用的是采样一圈像素的方式
                     float2 uv = distorted_UV + float2(s, c) * texelSize * _OutlineWidth;
                     float4 sampleColor = tex2D(_MainTex, uv);
                     if (sampleColor.x > 0.001f)
@@ -105,13 +105,11 @@ Shader "Irelans/SS_Outline_Distort"
 
                 if ((insideCount <= SAMPLE_COUNT) && (insideCount >= 1))
                 {
-                    // 预乘 Alpha
-                    // 深度遮罩
                     
+                    half insideMask =  1 - step(insideCount,3);
                     
-                    
-
-                    return float4(_OutlineColor.rgb * 1, 1);
+                    //如果只想要纯色描边，直接去掉这个insideMask的计算即可；
+                    return float4(_OutlineColor.rgb *insideMask , 1);
                 }
                 //
 

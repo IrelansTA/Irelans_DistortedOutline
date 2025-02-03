@@ -144,10 +144,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 101d808482b0cee4fa0b97c83f39df1b, type: 3}
   m_Name: SS_OutlineVolume
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   OutlineWidth:
     m_OverrideState: 1
-    m_Value: 2.6
+    m_Value: 5.59
   OutlineColor:
     m_OverrideState: 1
-    m_Value: {r: 1.5257235, g: 5.862593, b: 13.70566, a: 1}
+    m_Value: {r: 4.916183, g: 6.9198833, b: 7.8718348, a: 1}

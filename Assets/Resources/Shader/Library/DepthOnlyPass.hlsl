@@ -42,7 +42,6 @@ Varyings DepthOnlyVertex(Attributes input)
     output.positionNDC = positionInputs.positionNDC; 
        return output;
 }
-
 half DepthOnlyFragment(Varyings input) : SV_TARGET
 {
     UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
@@ -54,11 +53,7 @@ half DepthOnlyFragment(Varyings input) : SV_TARGET
 
     #if defined(LOD_FADE_CROSSFADE)
         LODFadeCrossFade(input.positionCS);
-    #endif
-
-    
-
-    
+    #endif  
     return input.positionCS.z ;
 }
 #endif
